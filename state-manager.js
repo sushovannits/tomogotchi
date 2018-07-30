@@ -12,8 +12,8 @@ module.exports =  class StateManager {
       unregister: () => {
         delete this.petMap[pet.name];
       },
-      update: (message) => {
-        this.uiCallback(message);
+      update: (...message) => {
+        this.uiCallback(...message);
       },
     });
   }
@@ -25,7 +25,7 @@ module.exports =  class StateManager {
       Object.values(this.petMap).forEach((pet) => {
         pet.handleNextActivity(); // TODO: Make async
       });
-    }, 500)
+    }, 1000)
   }
   end() {
     // clearImmediate(this.dayLoop);

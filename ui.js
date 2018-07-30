@@ -1,16 +1,16 @@
 const Vorpal = require('vorpal');
 const StateManager = require('./state-manager');
 const Pet = require('./pet');
-const stateList = require('./tomogotchi');
+const stateList = require('./state-list');
 
 const vorpal = new Vorpal()
                 .delimiter('myapp$')
                 .show();
 const stateManager = new StateManager('TestStateManager');
 
-stateManager.registerUI((message)=> {
+stateManager.registerUI((...message)=> {
   // console.log(message);
-  vorpal.log(message);
+  vorpal.log(...message);
 })
 
 vorpal
