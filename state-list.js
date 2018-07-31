@@ -1,24 +1,24 @@
-const StateManager = require('./state-manager');
 const State = require('./state');
-const Pet = require('./pet');
+const config = require('./config');
+const consts = require('./consts'); 
 
-const idleState = new State('idle', 10);
+const idleState = new State(consts.idle, config.idleStateTime);
 idleState.onEntryHandler = (pet) => {
-  pet.update('I WILL BE sitting idle now');
+  pet.update('I WILL BE sitting idle now.................:seat:');
 };
 idleState.onEveryHourHandler = (pet) => {
-  pet.update('Sitting Idle');
-  pet.updateVitals('happiness', 1)
-  pet.updateVitals('hunger', 1)
+  // pet.update('Sitting Idle');
+  pet.updateVitals(consts.happiness, consts.decr, config.idleHappinessDecr);
+  pet.updateVitals(consts.hunger, consts.incr, config.idleHungerIncr);
 }
 idleState.onExitHandler = (pet) => {
   pet.update('I am DONE sitting idle now');
 };
 
-const poopState = new State('poop', 1);
+const poopState = new State(consts.poop, config.poopStateTime);
 poopState.onEntryHandler = (pet) => {
-  pet.update('I WILL BE going to poop now');
-  pet.updateVitals('hunger', 4)
+  pet.update('I WILL BE going to poop now....................:poop:');
+  pet.updateVitals(consts.hunger, consts.incr, config.poopHungerIncr);
 };
 poopState.onEveryHourHandler = (pet) => {
   throw(new Error('This should not have been called'));
@@ -27,17 +27,17 @@ poopState.onExitHandler = (pet) => {
   pet.update('I am DONE pooping now');
 };
 
-const sleepState = new State('sleep', 10);
+const sleepState = new State(consts.sleep, config.sleepStateTime);
 sleepState.onEntryHandler = (pet) => {
-  pet.update('I WILL BE sleeping now');
+  pet.update('I WILL BE sleeping now...................:zzz:');
 };
 sleepState.onEveryHourHandler = (pet) => {
-  pet.update('Still sleeping');
+  // pet.update('Still sleeping');
 }
 sleepState.onExitHandler = (pet) => {
-  pet.update('I am DONE sleeping now');
+  pet.update('I am DONE sleeping now. Good morning...............:city_sunrise:');
   pet.update('Another day is over');
-  pet.ageEmitter.emit('dayOver');
+  pet.ageEmitter.emit(consts.dayOver);
 };
 
 
@@ -45,9 +45,3 @@ module.exports = [
   idleState, poopState, sleepState
 ];
 
-
-
-// const pet = new Pet('Mary', stateList);
-// const sm = new StateManager('MyStateManager');
-// sm.registerPet(pet);
-// sm.start();
