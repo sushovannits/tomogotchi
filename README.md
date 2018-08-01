@@ -14,7 +14,7 @@ The classical game of tomogotchi
   * [play](#play)
   * [feed](#feed)
   * [get-vitals](#get-vitals)
-- [Implmenetation Details](#implementation details)
+- [Implmentation Details](#implementation details)
 - [Unit Test](#unit test)
 <!-- tocstop -->
 
@@ -67,11 +67,16 @@ Feed the pet. Increases happiness. Decreases hunger. Cannot feed when sleeping
 ### get-vitals
 Check the vitals (hunger, happiness) of the pet
 
-## Implmenetation Details
+## Implmentation Details
 - Vorpal is used for cli farmework
 - Architecture is such that states, action, etc. can be extended easily
 - Everything is as much decoupled as possible.
 - Can be easily extended to multiple pets at the same time.
 - Can be extended to become a RESTful app by swapping the ui.js
 - All configurations are in config.js
+
+## Unit Test
+```
+yarn run test
+```
 **Warning**: In unit test, there is a pending promise problem. It has to be resolved. But testcases run fine.
