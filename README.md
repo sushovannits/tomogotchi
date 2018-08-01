@@ -3,8 +3,8 @@ The classical game of tomogotchi
 <!-- toc -->
 
 - [Overview](#overview)
-- [System Requirements](#installation)
-- [How To Play](#getting-started)
+- [System Requirements](#system-requirements)
+- [How To Play](#how-to-play)
 - [Commands](#commands)
   * [start](#start)
   * [stop](#stop)
@@ -14,8 +14,8 @@ The classical game of tomogotchi
   * [play](#play)
   * [feed](#feed)
   * [get-vitals](#get-vitals)
-- [Implementation Details](#implementation details)
-- [Unit Test](#unit test)
+- [Implementation Details](#implementation-details)
+- [Unit Test](#unit-test)
 <!-- tocstop -->
 
 ## Overview
@@ -45,6 +45,9 @@ The classical game of tomogotchi
 
 ### start
 This is like starting the clock of life. Pet cannot be created without starting the clock.
+
+### stop
+Stop the game
 
 ### pause
 You can pause the game with it when it gets too hot.
