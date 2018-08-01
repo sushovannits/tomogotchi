@@ -10,6 +10,7 @@ const opMap = {
 }
 module.exports = class Pet {
   constructor(name, stateList, actionList) {
+    this.stateListCheck(stateList);
     this.name = name;
     this.currentHour = undefined;
     this.currentAge = 0;
@@ -22,6 +23,18 @@ module.exports = class Pet {
     this.happiness = 0;
     this.criticalHappiness = config.criticalHappiness; // TODO: Move to config
     this.deathAge = config.deathAge;
+  }
+  stateListCheck(stateList) {
+    // verify that total hours in all the states do not exceed total hour in a day
+    if (!stateList) {
+      throw new Error('StateList invalid');
+    }
+    const totalHoursInStateList = stateList.reduce((totalHours, state) => {
+      return totalHours + state.hoursOfDay;
+    }, 0);
+    if (totalHoursInStateList !== config.totalHours) {
+      throw new Error('StateList total aggregate time of all states is invalid');
+    }
   }
   registerAction(actionList) {
     this.actionMap = {};
@@ -54,18 +67,31 @@ module.exports = class Pet {
       throw(new Error('No state manager callback has been registered'));
     }
   }
+  resolveSpanOfLife(prevAge) {
+    if (prevAge < config.teenAge && this.currentAge === config.teenAge) {
+      return 'and I am now a teen.........:birthday:';
+    } else if (prevAge < config.adultAge && this.currentAge === config.adultAge) {
+      return 'and I am now an adult..............:beers:';
+    } else if (prevAge < config.oldAge && this.currentAge === config.oldAge) {
+      return 'and I am now old..............:champagne:';
+    } 
+  }
   ageHandler() {
     // TODO: parameterize this handler
     // TODO: copy paste logic for handling age
+    const prevAge = this.currentAge;
     this.currentAge++;
-    this.stateManagerCallback.update('I am now age ' + this.currentAge);
+    const spanOfLife = this.resolveSpanOfLife(prevAge);
+    this.stateManagerCallback.update('I am now age ' 
+                                      + this.currentAge 
+                                      + (spanOfLife ? spanOfLife : ''));
     if (this.currentAge === this.deathAge) {
       this.die();
     }
   }
   registerStateListener(callbackMap) {
     this.stateManagerCallback = callbackMap;
-    // this.born();
+    this.born();
   }
   expandStateList(stateList) {
     const expandedStateList = [];

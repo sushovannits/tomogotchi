@@ -7,7 +7,7 @@ idleState.onEntryHandler = (pet) => {
   pet.update('I WILL BE sitting idle now.................:seat:');
 };
 idleState.onEveryHourHandler = (pet) => {
-  // pet.update('Sitting Idle');
+  pet.update(':disappointed_relieved:');
   pet.updateVitals(consts.happiness, consts.decr, config.idleHappinessDecr);
   pet.updateVitals(consts.hunger, consts.incr, config.idleHungerIncr);
 }
@@ -32,7 +32,7 @@ sleepState.onEntryHandler = (pet) => {
   pet.update('I WILL BE sleeping now...................:zzz:');
 };
 sleepState.onEveryHourHandler = (pet) => {
-  // pet.update('Still sleeping');
+  pet.update(':zzz:');
 }
 sleepState.onExitHandler = (pet) => {
   pet.update('I am DONE sleeping now. Good morning...............:city_sunrise:');

@@ -17,13 +17,13 @@ module.exports =  class StateManager {
         this.uiCallback(...message);
       },
     });
-    pet.born();
     this.petMap[pet.name] = pet;
   }
   registerUI(callback) {
     this.uiCallback = callback;
   }
   start() {
+    this.state = consts.ongoing;
     this.dayLoop = setInterval(() => {
       Object.values(this.petMap).forEach((pet) => {
         pet.handleNextActivity(); // TODO: Make async
@@ -41,14 +41,14 @@ module.exports =  class StateManager {
       return Object.values(this.petMap)[0];
     }
     if (!this.petMap[name]) {
-      this.uiCallback('Error here');
       throw new Error('Pet name not found');
     }
     return this.petMap[name];
   }
   // TODO: Pause functionality
-  end() {
+  pause() {
     // clearImmediate(this.dayLoop);
+    this.state = consts.paused;
     clearInterval(this.dayLoop);
     // this.rl.close();
   }

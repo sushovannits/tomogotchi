@@ -11,6 +11,8 @@ const sleep = 'sleep';
 const dayOver = 'dayOver';
 const happiness = 'happiness';
 const hunger = 'hunger';
+const ongoing = 'ongoing';
+const paused = 'paused';
 
 module.exports = {
   incr, decr, 
@@ -18,5 +20,6 @@ module.exports = {
   unborn, alive, dead, 
   idle, poop, sleep, 
   dayOver,
-  happiness, hunger
+  happiness, hunger,
+  ongoing, paused
 }

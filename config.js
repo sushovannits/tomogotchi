@@ -1,7 +1,7 @@
 module.exports = {
   timeIntervalEveryHour: 1500, // Actual timer in ms for every hour of a day
+  totalHours: 21,
   // Critical limits
-  deathAge: 20,
   criticalHappiness:  -20,
   criticalHunger: 50,
   // Hours of teh day for which state lasts in a day
@@ -16,6 +16,11 @@ module.exports = {
   playHappinessIncr: 10,
   playHungerIncr: 2,
   feedHappinessIncr: 1,
-  feedHungerDecr: 10
+  feedHungerDecr: 10,
+  //Span of life (in days)
+  teenAge: 5,
+  adultAge: 10,
+  oldAge: 15,
+  deathAge: 20,
 
 }
