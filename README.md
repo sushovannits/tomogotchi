@@ -14,7 +14,7 @@ The classical game of tomogotchi
   * [play](#play)
   * [feed](#feed)
   * [get-vitals](#get-vitals)
-- [Implmentation Details](#implementation details)
+- [Implementation Details](#implementation details)
 - [Unit Test](#unit test)
 <!-- tocstop -->
 
@@ -67,7 +67,7 @@ Feed the pet. Increases happiness. Decreases hunger. Cannot feed when sleeping
 ### get-vitals
 Check the vitals (hunger, happiness) of the pet
 
-## Implmentation Details
+## Implementation Details
 - Vorpal is used for cli farmework
 - Architecture is such that states, action, etc. can be extended easily
 - Everything is as much decoupled as possible.
