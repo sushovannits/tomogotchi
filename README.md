@@ -12,7 +12,7 @@ The classical game of tomogotchi
   * [resume](#resume)
   * [pet](#pet)
   * [play](#play)
-  * [feed] (#feed)
+  * [feed](#feed)
   * [get-vitals](#get-vitals)
 - [Implmenetation Details](#implementation details)
 - [Unit Test](#unit test)
