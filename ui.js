@@ -90,6 +90,7 @@ vorpal
     return true;
   })
   .action(function(args, callback) {
+    stateManager.pause();
     stateManager = undefined;
     this.log(tickEmojify('The game is stopped'));
     callback();

@@ -8,7 +8,7 @@ playAction.onInvokeHandler = (pet) => {
     pet.update(':warning: Sorry I am sleeping will play later');
     return;
   }
-  pet.update('Hurray!! play time');
+  pet.update('Hurray!! play time..............:soccer:');
   pet.updateVitals(consts.happiness, consts.incr, config.playHappinessIncr);
   pet.updateVitals(consts.hunger, consts.incr, config.playHungerIncr);
 }
@@ -19,7 +19,7 @@ feedAction.onInvokeHandler = (pet) => {
     pet.update(':warning: Sorry I am sleeping will eat later');
     return;
   }
-  pet.update('Food!! Food!! Food!!');
+  pet.update('Food!! Food!! Food!! ...............:poultry_leg:');
   pet.updateVitals(consts.happiness, consts.incr, config.feedHappinessIncr);
   pet.updateVitals(consts.hunger, consts.decr, config.feedHungerDecr);
 }

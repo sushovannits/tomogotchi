@@ -59,7 +59,7 @@ module.exports = class Pet {
     this.stateManagerCallback.update('Hurray I am born :birthday: and my name is ' + this.name);
   }
   die() {
-    this.stateManagerCallback.update('I am dying');
+    this.stateManagerCallback.update('I am dying......:disappointed:');
     if (this.stateManagerCallback) {
       this.currentState = 'dead';
       this.stateManagerCallback.unregister();
