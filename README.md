@@ -37,6 +37,9 @@ The classical game of tomogotchi
 - `pet <name of pet>`
 - `play`
 - `feed`
+- Auto complete feature is on
+- Type help anytime to see available commands
+- `exit` To exit the app
 
 ## Commands
 
