@@ -30,6 +30,7 @@ The classical game of tomogotchi
 - yarn/ npm
 
 ## How To Play
+![](video/out.gif)
 - `yarn install`
 - `yarn run start`
 - `tomogotchi` prompt appears
