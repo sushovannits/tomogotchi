@@ -5,8 +5,8 @@ const consts = require('./consts');
 class AgeEmitter extends EventEmitter {}
 const deathAge = 20;
 const opMap = {
-  'incr' : (a, b) => a + b,
-  'decr' : (a, b) => a - b,
+  'incr': (a, b) => a + b,
+  'decr': (a, b) => a - b,
 }
 module.exports = class Pet {
   constructor(name, stateList, actionList) {
@@ -43,28 +43,36 @@ module.exports = class Pet {
     });
   }
   action(action) {
-    if (this.actionMap[action] === undefined){
+    if (this.actionMap[action] === undefined) {
       this.update(`That is an invalid action: ${action}`);
       return;
     }
     return this.actionMap[action].onInvokeHandler(this);
   }
   update(...message) {
-    this.stateManagerCallback.update(...message);
+    if (this.stateManagerCallback) {
+      this.stateManagerCallback.update(...message);
+    } else {
+      throw (new Error('No state manager callback has been registered'));
+    }
   }
   getVitals() {
     return `Happiness: ${this.happiness} and Hunger: ${this.hunger}`;
   }
   born() {
-    this.stateManagerCallback.update('Hurray I am born :birthday: and my name is ' + this.name);
+    if (this.stateManagerCallback) {
+      this.stateManagerCallback.update('Hurray I am born :birthday: and my name is ' + this.name);
+    } else {
+      throw (new Error('No state manager callback has been registered'));
+    }
   }
   die() {
-    this.stateManagerCallback.update('I am dying......:disappointed:');
     if (this.stateManagerCallback) {
+      this.stateManagerCallback.update('I am dying......:disappointed:');
       this.currentState = 'dead';
       this.stateManagerCallback.unregister();
     } else {
-      throw(new Error('No state manager callback has been registered'));
+      throw (new Error('No state manager callback has been registered'));
     }
   }
   resolveSpanOfLife(prevAge) {
@@ -74,19 +82,23 @@ module.exports = class Pet {
       return 'and I am now an adult..............:beers:';
     } else if (prevAge < config.oldAge && this.currentAge === config.oldAge) {
       return 'and I am now old..............:champagne:';
-    } 
+    }
   }
   ageHandler() {
     // TODO: parameterize this handler
     // TODO: copy paste logic for handling age
-    const prevAge = this.currentAge;
-    this.currentAge++;
-    const spanOfLife = this.resolveSpanOfLife(prevAge);
-    this.stateManagerCallback.update('I am now age ' 
-                                      + this.currentAge 
-                                      + (spanOfLife ? spanOfLife : ''));
-    if (this.currentAge === this.deathAge) {
-      this.die();
+    if (this.stateManagerCallback) {
+      const prevAge = this.currentAge;
+      this.currentAge++;
+      const spanOfLife = this.resolveSpanOfLife(prevAge);
+      this.stateManagerCallback.update('I am now age ' +
+        this.currentAge +
+        (spanOfLife ? spanOfLife : ''));
+      if (this.currentAge === this.deathAge) {
+        this.die();
+      }
+    } else {
+      throw (new Error('No state manager callback has been registered'));
     }
   }
   registerStateListener(callbackMap) {
@@ -101,29 +113,31 @@ module.exports = class Pet {
     return expandedStateList;
   }
   updateVitals(vital, op, value) {
-    const halfHappinessCritical = (this.criticalHappiness/2);
-    const halfHungerCritical = (this.criticalHunger/2);
-    switch(vital) {
-      case consts.happiness: {
-        const newValue = opMap[op](this.happiness, value);
-        if (this.happiness >= halfHappinessCritical 
-            && newValue < halfHappinessCritical) {
-          this.update(chalk.black.bgRed('I am getting really sad. Please play with me'));
+    const halfHappinessCritical = (this.criticalHappiness / 2);
+    const halfHungerCritical = (this.criticalHunger / 2);
+    switch (vital) {
+      case consts.happiness:
+        {
+          const newValue = opMap[op](this.happiness, value);
+          if (this.happiness >= halfHappinessCritical &&
+            newValue < halfHappinessCritical) {
+            this.update(chalk.black.bgRed('I am getting really sad. Please play with me'));
+          }
+          this.happiness = newValue;
+          break;
         }
-        this.happiness = newValue;
-        break;
-      }
-      case consts.hunger: {
-      const newValue = opMap[op](this.hunger, value);
-        if (this.hunger <= halfHungerCritical 
-            && newValue > halfHungerCritical) {
-          this.update(chalk.black.bgRed('I am getting really hungry. Feed me'));
+      case consts.hunger:
+        {
+          const newValue = opMap[op](this.hunger, value);
+          if (this.hunger <= halfHungerCritical &&
+            newValue > halfHungerCritical) {
+            this.update(chalk.black.bgRed('I am getting really hungry. Feed me'));
+          }
+          this.hunger = newValue;
+          break;
         }
-        this.hunger = newValue;
-        break;
-      }
       default:
-        throw(new Error('Unsupported vital update'));
+        throw (new Error('Unsupported vital update'));
     }
     return;
   }
@@ -143,7 +157,7 @@ module.exports = class Pet {
   handleNextActivity() {
     // Calculate next activity from hour of day
     const allOk = this.vitalCheckAndUpdate();
-    if(!allOk) {
+    if (!allOk) {
       return;
     }
     if (this.currentHour === undefined) {
@@ -152,7 +166,7 @@ module.exports = class Pet {
       currentState.onEntryHandler(this);
       return;
     }
-    let nextHour = (this.currentHour + 1)%this.stateList.length;
+    let nextHour = (this.currentHour + 1) % this.stateList.length;
     // console.debug(`Current hour ${this.currentHour} and next hour is ${nextHour}`);
     const currentState = this.stateList[this.currentHour];
     const nextState = this.stateList[nextHour];
@@ -165,7 +179,6 @@ module.exports = class Pet {
     } else {
       nextState.onEveryHourHandler(this);
     }
-    this.currentHour = nextHour;  
+    this.currentHour = nextHour;
   }
 }
-

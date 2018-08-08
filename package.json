@@ -27,6 +27,6 @@
   },
   "scripts": {
     "test": "jest --forceExit",
-    "start": "node ui.js"
+    "start": "node src/ui.js"
   }
 }
